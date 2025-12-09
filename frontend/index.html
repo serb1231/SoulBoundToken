@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>National Voting System</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.7.0/ethers.umd.min.js"></script>
+</head>
+<body>
+    <h1>National Voting Station</h1>
+    <button onclick="connectWallet()">Connect Wallet</button>
+    <p id="status">Not Connected</p>
+
+    <hr>
+    <h3>Step 1: Get ID</h3>
+    <button onclick="mintID()">Mint National ID</button>
+
+    <h3>Step 2: Vote</h3>
+    <input type="text" id="candidateName" placeholder="Candidate Name (e.g. Alice)">
+    <button onclick="vote()">Vote</button>
+
+    <script>
+        // PASTE YOUR CONTRACT ADDRESSES HERE
+        const ID_ADDR = "0x5FbDB2315678afecb367f032d93F642f64180aa3"; 
+        const VOTE_ADDR = "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0";
+        
+        // PASTE YOUR ABIs (Just the minimal parts you need)
+        const ID_ABI = [ "function safeMint(address to) public" ];
+        const VOTE_ABI = [ "function vote(string candidate) public" ];
+
+        let provider, signer, idContract, voteContract;
+
+        async function connectWallet() {
+            if (!window.ethereum) return alert("Install Metamask!");
+            provider = new ethers.BrowserProvider(window.ethereum);
+            signer = await provider.getSigner();
+            
+            idContract = new ethers.Contract(ID_ADDR, ID_ABI, signer);
+            voteContract = new ethers.Contract(VOTE_ADDR, VOTE_ABI, signer);
+
+            document.getElementById("status").innerText = "Connected: " + await signer.getAddress();
+        }
+
+        async function mintID() {
+            try {
+                const tx = await idContract.safeMint(await signer.getAddress());
+                alert("Minting... Wait for transaction.");
+                await tx.wait();
+                alert("ID Minted!");
+            } catch (err) { alert(err.message); }
+        }
+
+        async function vote() {
+            const name = document.getElementById("candidateName").value;
+            try {
+                const tx = await voteContract.vote(name);
+                alert("Voting... Wait for transaction.");
+                await tx.wait();
+                alert("Voted!");
+            } catch (err) { alert(err.message); }
+        }
+    </script>
+</body>
+</html>
