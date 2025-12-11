@@ -21,3 +21,21 @@ You can target any network from your Hardhat config using:
 ```
 npx hardhat ignition deploy ignition/modules/MyToken.ts --network <network-name>
 ```
+
+## Running a local blockchain to test functionalities
+In one terminal, one should run:
+```
+npx hardhat node
+```
+And in another terminal, they should first deploy the contract:
+```
+npx hardhat ignition deploy .\ignition\modules\DeployEverything.ts --network localhost
+```
+And then run the tests, one at a time, using the syntax:
+```
+npx hardhat run scripts/<\testAaaBbb>.ts --network localhost
+```
+After each test, one should better restart the blockchain, in order to delete the history. Otherwise, the future tests will fail, or not display the wonderful "GOOD".
+
+## Testing
+### Testing Static Analysis
