@@ -1,143 +1,66 @@
-# Decentralized Identity & Voting Protocol
+## Foundry
 
-This project demonstrates a **Composable Identity System** using Soulbound Tokens (SBT). A verified digital identity unlocks permissioned applications such as Driving Licenses and Decentralized Voting, all without relying on centralized databases.
+**Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**
 
----
+Foundry consists of:
 
-## 🏗 Project Architecture
+- **Forge**: Ethereum testing framework (like Truffle, Hardhat and DappTools).
+- **Cast**: Swiss army knife for interacting with EVM smart contracts, sending transactions and getting chain data.
+- **Anvil**: Local Ethereum node, akin to Ganache, Hardhat Network.
+- **Chisel**: Fast, utilitarian, and verbose solidity REPL.
 
-The system consists of three interacting smart contracts:
+## Documentation
 
-### 1. **National ID (`NationalID.sol`)**
+https://book.getfoundry.sh/
 
-* Soulbound Token (non-transferable ERC721)
-* Represents a verified human identity
-* `onlyOwner` issuance
-* Pausing functionality for security
+## Usage
 
-### 2. **Driving License (`DrivingLicense.sol`)**
+### Build
 
-* Requires the user to hold a National ID before minting
-* Example of a downstream "Composable Identity" use case
-
-### 3. **Voting Station (`VotingStation.sol`)**
-
-* Verifies identity using the National ID contract
-* Prevents double-voting
-
----
-
-## ⚙️ Installation
-
-### 1. Clone the repository
-
-```bash
-git clone <YOUR_REPO_URL>
-cd <YOUR_PROJECT_FOLDER>
+```shell
+$ forge build
 ```
 
-### 2. Install dependencies
+### Test
 
-```bash
-npm install
+```shell
+$ forge test
 ```
 
-### 3. Environment Configuration
+### Format
 
-Create a `.env` file (see `.env.example`):
-
-```ini
-SEPOLIA_RPC_URL="https://eth-sepolia.g.alchemy.com/v2/..."
-PRIVATE_KEY="0x..."
+```shell
+$ forge fmt
 ```
 
----
+### Gas Snapshots
 
-## 🧪 Running Tests
-
-### Unit Tests, Fuzzing & Invariants
-
-```bash
-npx hardhat test
+```shell
+$ forge snapshot
 ```
 
-### Static Analysis (Slither)
-Static analysis should be done automatically on push on github. For using slither, install it using
-```bash
-pip install slither
-```
-And use it with
-```bash
-slither .
+### Anvil
+
+```shell
+$ anvil
 ```
 
----
+### Deploy
 
-## 🚀 Local Deployment & Interaction
-
-### Terminal 1 — Start Local Blockchain
-
-```bash
-npx hardhat node
+```shell
+$ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key>
 ```
 
-### Terminal 2 — Deploy the Protocol
+### Cast
 
-Deploys National ID, Driving License, and Voting Station.
-
-```bash
-npx hardhat ignition deploy ./ignition/modules/DeployEverything.ts --network localhost
+```shell
+$ cast <subcommand>
 ```
 
-Copy deployed addresses for later use.
+### Help
 
-### Run Example Scripts
-
-```bash
-npx hardhat run scripts/TestNationalIDMinting.ts --network localhost
-npx hardhat run scripts/TestVoting.ts --network localhost
-npx hardhat run scripts/TestDrivingLicenseMint.ts --network localhost
-npx hardhat run scripts/TestMintingMultipleCitizens.ts --network localhost
+```shell
+$ forge --help
+$ anvil --help
+$ cast --help
 ```
-
----
-
-## ⚠️ Local Node State Persistence
-
-If `npx hardhat node` is running, the blockchain state persists.
-
-To reset:
-
-* Stop the node (`Ctrl+C`)
-* Restart it
-
-This prevents errors (or residue infomration regarding the soulbound status of users) like:
-
-* "User already has an ID"
-* "User already voted"
-
----
-
-## 🌐 Deploying to Sepolia Testnet
-
-```bash
-npx hardhat ignition deploy ignition/modules/DeployEverything.ts --network sepolia
-```
-
----
-
-## 📄 License
-
-MIT License — Feel free to use, modify, and build on this project.
-
----
-
-## 🤝 Contributions
-
-Pull requests, issues, and feature suggestions are welcome!
-
----
-
-## ⭐ Support
-
-If this project helps you, consider giving it a star on GitHub!
