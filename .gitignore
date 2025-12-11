@@ -8,3 +8,15 @@ typechain-types
 # Hardhat files
 cache
 artifacts
+
+# build outputs
+artifacts
+cache
+coverage
+typechain
+ignition/deployments
+
+.env.local
+
+.DS_Store
+.vscode
