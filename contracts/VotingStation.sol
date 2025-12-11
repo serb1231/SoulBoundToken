@@ -40,7 +40,7 @@ contract VotingStation {
 
         // check that the candidate is valid
         bool validCandidate = false;
-        uint256 candidateLength = candidate.length;
+        uint256 candidateLength = candidates.length;
         for (uint256 i = 0; i < candidateLength; i++) {
             // solidity doesn't know how to compare strings, hence pack it as a set of bytes, and compare
             // the hash of those bytes
