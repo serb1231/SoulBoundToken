@@ -61,6 +61,13 @@ contract NationalID is ERC721, ERC721Enumerable, ERC721Pausable, Ownable, ERC721
         return super._update(to, tokenId, auth);
     }
 
+    function _increaseBalance(address account, uint128 value)
+        internal
+        override(ERC721, ERC721Enumerable, ERC721Votes)
+    {
+        super._increaseBalance(account, value);
+    }
+
     function supportsInterface(bytes4 interfaceId)
         public
         view
