@@ -21,7 +21,7 @@ contract VotingStation {
 
     // store the address of the national ID contract
     // in order to verify identity
-    IERC721 constant public nationalIdContract;
+    IERC721 public immutable nationalIdContract;
 
     // set the address of the National ID contract
     constructor(address _nationalIdAddress, string[] memory _candidates) {
