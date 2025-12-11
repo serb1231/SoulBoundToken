@@ -10,7 +10,7 @@ contract DrivingLicense is ERC721 {
     // store address of the required contract
     // we cannot have a driving licence without
     // a national ID first
-    IERC721 public nationalIdContract;
+    IERC721 constant public nationalIdContract;
 
     // set the address of the National ID contract
     constructor(address _nationalIdAddress) ERC721("Driving License", "DL") {

@@ -21,7 +21,7 @@ contract VotingStation {
 
     // store the address of the national ID contract
     // in order to verify identity
-    IERC721 public nationalIdContract;
+    IERC721 constant public nationalIdContract;
 
     // set the address of the National ID contract
     constructor(address _nationalIdAddress, string[] memory _candidates) {
@@ -40,7 +40,8 @@ contract VotingStation {
 
         // check that the candidate is valid
         bool validCandidate = false;
-        for (uint256 i = 0; i < candidates.length; i++) {
+        uint256 candidateLength = candidate.length;
+        for (uint256 i = 0; i < candidateLength; i++) {
             // solidity doesn't know how to compare strings, hence pack it as a set of bytes, and compare
             // the hash of those bytes
             if (keccak256(abi.encodePacked(candidates[i])) == keccak256(abi.encodePacked(candidate))) {
