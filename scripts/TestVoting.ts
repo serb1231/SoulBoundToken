@@ -10,7 +10,7 @@ async function main() {
     const INVALID_CANDIDATE = "Mickey Mouse";
 
     const [citizen] = await ethers.getSigners();
-    console.log(`👤 Testing with Main User (Citizen): ${citizen.address}`);
+    console.log(`Testing with Main User (Citizen): ${citizen.address}`);
 
     // Connect to contracts
     const NationalID = await ethers.getContractAt("NationalID", NATIONAL_ID_ADDR, citizen);
