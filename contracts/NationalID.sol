@@ -22,7 +22,7 @@ contract NationalID is ERC721, ERC721Enumerable, ERC721Pausable, Ownable, ERC721
 // in a system like this, what should I do..
 
     function _baseURI() internal pure override returns (string memory) {
-        return "plm?";
+        return "https://example.com/";
     }
 
     function pause() public onlyOwner {

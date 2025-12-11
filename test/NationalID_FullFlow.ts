@@ -51,4 +51,45 @@ describe("NationalID System Tests", function () {
       contract.transferFrom(user.address, randomReceiver, tokenId)
     ).to.be.revertedWith("Soulbound: Transfer failed");
   });
+
+  // Test for returning the token URI
+  it("Should return the correct Token URI", async function () {
+    // mint a token
+    await contract.safeMint(user.address);
+    
+    // get the token URI
+    const uri = await contract.tokenURI(0);
+    
+    // 3. Expect it to be "https://example.com/0"
+    expect(uri).to.equal("https://example.com/0");
+  });
+
+
+  // pausing and unpausing
+  it("Should allow Owner to pause and unpause", async function () {
+    // pause
+    await contract.pause();
+    expect(await contract.paused()).to.equal(true);
+
+    // try to mint while paused
+    await expect(
+      contract.safeMint(user.address)
+    ).to.be.revertedWithCustomError(contract, "EnforcedPause"); 
+
+    // unpause
+    await contract.unpause();
+    expect(await contract.paused()).to.equal(false);
+
+    // mint should work again
+    await contract.safeMint(user.address);
+    expect(await contract.balanceOf(user.address)).to.equal(1n);
+  });
+
+  // non-owner trying to pause
+  it("Should prevent non-owner from pausing", async function () {
+    // hacker tries to pause
+    await expect(
+      contract.connect(hacker).pause()
+    ).to.be.revertedWithCustomError(contract, "OwnableUnauthorizedAccount");
+  });
 });
