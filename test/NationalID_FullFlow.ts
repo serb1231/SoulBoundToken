@@ -44,7 +44,7 @@ describe("NationalID System Tests", function () {
     await contract.safeMint(user.address);
     
     const randomReceiver = "0x000000000000000000000000000000000000dead";
-    const tokenId = 0; // The first token is always ID 0
+    const tokenId = 0;
 
     // Attempt Transfer
     await expect(
