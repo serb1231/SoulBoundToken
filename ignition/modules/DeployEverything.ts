@@ -1,6 +1,9 @@
 import { buildModule } from "@nomicfoundation/hardhat-ignition/modules";
 
 const IdentitySystemModule = buildModule("IdentitySystem", (m) => {
+  // this is an abstraction, it means that if we deploy on localhost
+  // we get the first available aaccount. If we deploy on sepolia,
+  // we get our account (defined in env).
   const deployer = m.getAccount(0);
 
   // deploy the nationalId contract first
