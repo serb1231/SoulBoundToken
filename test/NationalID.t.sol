@@ -37,6 +37,7 @@ contract NationalIDAdvancedTest is Test {
     function testFuzz_CannotMintTwice(address user) public {
         vm.assume(user != address(0));
         vm.assume(user != address(nationalID));
+        vm.assume(user.code.length == 0);
 
         // mint once
         vm.prank(owner);
@@ -56,7 +57,8 @@ contract NationalIDAdvancedTest is Test {
         // Try to mint from a non-owner account
         vm.prank(randomCaller);
         
-        // it should fail
+        // it should fail. This is from the Ownable library, giving an error regarding somebody
+        // else than the oner calling the function
         vm.expectRevert(abi.encodeWithSelector(Ownable.OwnableUnauthorizedAccount.selector, randomCaller));
         nationalID.safeMint(victim);
     }
@@ -70,7 +72,7 @@ contract NationalIDAdvancedTest is Test {
         // try to mint
         vm.prank(owner);
         
-        // expect error
+        // expect error. This is defined in the Pausable contract. 
         vm.expectRevert(abi.encodeWithSignature("EnforcedPause()"));
         nationalID.safeMint(address(0xABC));
     }

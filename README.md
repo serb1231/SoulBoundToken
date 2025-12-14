@@ -94,6 +94,11 @@ And use it with
 slither .
 ```
 
+If the command above is not working due to having foundry and hardhat in the project, try
+```bash
+slither . --compile-force-framework hardhat
+```
+
 ---
 
 ## Local Deployment & Interaction

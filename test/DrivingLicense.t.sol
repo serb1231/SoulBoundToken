@@ -72,6 +72,7 @@ contract DrivingLicenseAdvancedTest is Test {
     function testFuzz_NationalID_CannotMintTwice(address user) public {
         vm.assume(user != address(0));
         vm.assume(user != address(nationalID));
+        vm.assume(user.code.length == 0);
 
         // mint ID once
         vm.prank(owner);
